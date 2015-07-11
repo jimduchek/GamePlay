@@ -53,6 +53,13 @@ public:
     void setImage(const char* path);
 
     /**
+     * Set the image for this ImageControl to display.
+     *
+     * @param path The path to the image.
+     */
+    void setImage(Image* image);
+
+    /**
      * Set the source region of this ImageControl.  This is the region of the file,
      * in pixels, to use when drawing.
      *
