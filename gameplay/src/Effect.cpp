@@ -233,6 +233,7 @@ Effect* Effect::createFromSource(const char* vshPath, const char* vshSource, con
 
     const unsigned int SHADER_SOURCE_LENGTH = 3;
     const GLchar* shaderSource[SHADER_SOURCE_LENGTH];
+	GLint shaderSourceLen[] = { -1, -1, -1 };
     char* infoLog = NULL;
     GLuint vertexShader;
     GLuint fragmentShader;
@@ -256,7 +257,7 @@ Effect* Effect::createFromSource(const char* vshPath, const char* vshSource, con
     }
     shaderSource[2] = vshPath ? vshSourceStr.c_str() :  vshSource;
     GL_ASSERT( vertexShader = glCreateShader(GL_VERTEX_SHADER) );
-    GL_ASSERT( glShaderSource(vertexShader, SHADER_SOURCE_LENGTH, shaderSource, NULL) );
+    GL_ASSERT( glShaderSource(vertexShader, SHADER_SOURCE_LENGTH, shaderSource, shaderSourceLen) );
     GL_ASSERT( glCompileShader(vertexShader) );
     GL_ASSERT( glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success) );
     if (success != GL_TRUE)
@@ -297,7 +298,7 @@ Effect* Effect::createFromSource(const char* vshPath, const char* vshSource, con
     }
     shaderSource[2] = fshPath ? fshSourceStr.c_str() : fshSource;
     GL_ASSERT( fragmentShader = glCreateShader(GL_FRAGMENT_SHADER) );
-    GL_ASSERT( glShaderSource(fragmentShader, SHADER_SOURCE_LENGTH, shaderSource, NULL) );
+    GL_ASSERT( glShaderSource(fragmentShader, SHADER_SOURCE_LENGTH, shaderSource, shaderSourceLen) );
     GL_ASSERT( glCompileShader(fragmentShader) );
     GL_ASSERT( glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success) );
     if (success != GL_TRUE)
