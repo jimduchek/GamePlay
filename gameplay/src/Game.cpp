@@ -763,27 +763,35 @@ Properties* Game::getConfig() const
     return _properties;
 }
 
+std::vector<std::string> Game::getConfigFiles() const
+{
+    return { "game.config" };
+}
+
 void Game::loadConfig()
 {
     if (_properties == NULL)
     {
-        // Try to load custom config from file.
-        if (FileSystem::fileExists("game.config"))
-        {
-            _properties = Properties::create("game.config");
+        std::vector<std::string> configFiles = getConfigFiles();
 
-            // Load filesystem aliases.
-            Properties* aliases = _properties->getNamespace("aliases", true);
-            if (aliases)
+        for (auto it = configFiles.begin(); it != configFiles.end(); it++)
+        {
+            // Try to load custom config from file.
+            if (FileSystem::fileExists((*it).c_str()))
             {
-                FileSystem::loadResourceAliases(aliases);
+                _properties = Properties::create((*it).c_str());
+
+                // Load filesystem aliases.
+                Properties* aliases = _properties->getNamespace("aliases", true);
+                if (aliases)
+                {
+                    FileSystem::loadResourceAliases(aliases);
+                }
+                return;
             }
         }
-        else
-        {
-            // Create an empty config
-            _properties = new Properties();
-        }
+        // Create an empty config
+        _properties = new Properties();
     }
 }
 

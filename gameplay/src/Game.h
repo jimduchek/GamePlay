@@ -676,6 +676,13 @@ protected:
      */
     void updateOnce();
 
+    /**
+      * Gets a list of config file locations, in preferred order
+      *
+      * @return std::vector of strings containing config file locations.
+      */
+    virtual std::vector<std::string> getConfigFiles() const;
+
 private:
 
     struct ShutdownListener : public TimeListener
